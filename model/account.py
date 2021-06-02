@@ -26,13 +26,16 @@ class ReportAccountReceivableAge(models.TransientModel):
         customer_detail = []
         for customer in self.customers:
             invoices = self.env['account.invoice'].search([
-                ('date_invoice', '=', date_invoice),
+                ('date_invoice', '>=', date_invoice),
                 ('partner_id', '=', customer.id)
             ])
             customer_temp = []
             customer_invoices = []
             customer_temp.append(customer.credit_limit)
             for invoice in invoices:
+                invoice_date = datetime.strptime(invoice.date_invoice, '%Y-%m-%d').date()
+                invoice_age = today - invoice_date
+
                 customer_invoice = []
                 customer_invoice.append(invoice.number)         #0
                 customer_invoice.append(invoice.payment_term_id.name)#1
@@ -41,6 +44,7 @@ class ReportAccountReceivableAge(models.TransientModel):
                 customer_invoice.append(invoice.date_due)       #4
                 customer_invoice.append(invoice.amount_total)   #5
                 customer_invoice.append(invoice.residual)       #6
+                customer_invoice.append(invoice_age.days)       #7
                 customer_invoices.append(customer_invoice)      
             
             customer_temp.append(customer_invoices)
