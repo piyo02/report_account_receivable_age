@@ -44,6 +44,7 @@
                                     <td><b>Payment Term</b></td>
                                     <td class="text-right"><b>Total Tagihan</b></td>
                                     <td class="text-right"><b>Sisa Tagihan</b></td>
+                                    <td><b>Keterangan</b></td>
                                 </tr>
                                 <t t-set="total_invoice" t-value="0"/>
                                 <t t-set="residual_invoice" t-value="0"/>
@@ -75,10 +76,13 @@
                                             <span t-esc="'{:,}'.format(invoice[6])"/>
                                             <t t-set="residual_invoice" t-value="residual_invoice + invoice[6]"/>
                                         </td>
+                                        <td>
+                                            <span t-esc="invoice[8]"/>
+                                        </td>
                                     </tr>
                                 </t>
                                 <tr>
-                                    <td colspan="7" class="text-right">
+                                    <td colspan="8" class="text-right">
                                         <span t-esc="'{:,}'.format(total_invoice)"/>
                                     </td>
                                     <td class="text-right">

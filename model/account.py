@@ -27,7 +27,8 @@ class ReportAccountReceivableAge(models.TransientModel):
         for customer in self.customers:
             invoices = self.env['account.invoice'].search([
                 ('date_invoice', '>=', date_invoice),
-                ('partner_id', '=', customer.id)
+                ('partner_id', '=', customer.id),
+                ('state', 'in', ['draft', 'open'])
             ])
             customer_temp = []
             customer_invoices = []
@@ -45,6 +46,15 @@ class ReportAccountReceivableAge(models.TransientModel):
                 customer_invoice.append(invoice.amount_total)   #5
                 customer_invoice.append(invoice.residual)       #6
                 customer_invoice.append(invoice_age.days)       #7
+                
+                bg_number = '-'
+                giro = self.env['vit.giro'].search([
+                    ('giro_invoice_ids.invoice_id', '=', invoice.id)
+                ])
+                if giro:
+                    bg_number = giro.name
+                customer_invoice.append(bg_number)              #8
+                
                 customer_invoices.append(customer_invoice)      
             
             customer_temp.append(customer_invoices)
