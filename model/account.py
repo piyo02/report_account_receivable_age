@@ -48,11 +48,12 @@ class ReportAccountReceivableAge(models.TransientModel):
                 customer_invoice.append(invoice_age.days)       #7
                 
                 bg_number = '-'
-                giro = self.env['vit.giro'].search([
+                giros = self.env['vit.giro'].search([
                     ('giro_invoice_ids.invoice_id', '=', invoice.id)
                 ])
-                if giro:
-                    bg_number = giro.name
+                if giros:
+                    for giro in giros:
+                        bg_number = bg_number + ' ' + giro.name
                 customer_invoice.append(bg_number)              #8
                 
                 customer_invoices.append(customer_invoice)      
@@ -60,10 +61,7 @@ class ReportAccountReceivableAge(models.TransientModel):
             customer_temp.append(customer_invoices)
 
             if len(customer_invoices) > 0:
-                customer_detail.append(customer_temp)
-        
-        if len(customer_detail) > 0:
-            groupby_dict[customer.display_name] = customer_detail
+                groupby_dict[customer.display_name] = [customer_temp]
         
         datas = {
             'ids': self.ids,
