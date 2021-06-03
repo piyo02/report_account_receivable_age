@@ -82,12 +82,13 @@
                                     </tr>
                                 </t>
                                 <tr>
-                                    <td colspan="8" class="text-right">
+                                    <td colspan="7" class="text-right">
                                         <span t-esc="'{:,}'.format(total_invoice)"/>
                                     </td>
                                     <td class="text-right">
                                         <span t-esc="'{:,}'.format(residual_invoice)"/>
                                     </td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
