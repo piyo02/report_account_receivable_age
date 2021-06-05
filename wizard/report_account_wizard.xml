@@ -12,7 +12,7 @@
                             <field name="age"/>
                         </group>
                         <group>
-                            <field name="customers" widget="many2many_tags"/>
+                            <field name="city_ids" widget="many2many_tags"/>
                         </group>
                     </group>
 
