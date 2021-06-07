@@ -42,9 +42,9 @@ class ReportAccountReceivableAge(models.TransientModel):
                     customer_invoice = []
                     customer_invoice.append(invoice.number)         #0
                     customer_invoice.append(invoice.payment_term_id.name)#1
-                    customer_invoice.append(invoice.date_invoice)   #2
+                    customer_invoice.append( datetime.strptime(invoice.date_invoice, '%Y-%m-%d').strftime('%d-%m-%Y') )   #2
                     customer_invoice.append(invoice.user_id.name)   #3
-                    customer_invoice.append(invoice.date_due)       #4
+                    customer_invoice.append( datetime.strptime(invoice.date_due, '%Y-%m-%d').strftime('%d-%m-%Y') )       #4
                     customer_invoice.append(invoice.amount_total)   #5
                     customer_invoice.append(invoice.residual)       #6
                     customer_invoice.append(invoice_age.days)       #7
