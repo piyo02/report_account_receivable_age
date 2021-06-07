@@ -29,7 +29,8 @@ class ReportAccountReceivableAge(models.TransientModel):
                 invoices = self.env['account.invoice'].search([
                     ('date_invoice', '>=', date_invoice),
                     ('partner_id', '=', customer.id),
-                    ('state', 'in', ['draft', 'open'])
+                    ('state', 'in', ['draft', 'open']),
+                    ('type', '=', 'out_invoice')
                 ])
                 customer_temp = []
                 customer_invoices = []
